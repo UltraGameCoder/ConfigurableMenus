@@ -105,15 +105,15 @@ public class MenuManager implements CommandExecutor {
 				ConfigurationSection slotSection = menuSection.createSection("slots."+index);
 				ItemStack slotItem = menu.getSlot(index);
 				if (slotItem == null)continue;
-				ItemMeta slotMeta = null;
-				if (slotItem.hasItemMeta()) slotMeta = slotItem.getItemMeta();
+				ItemMeta slotMeta = slotItem.getItemMeta();
+				
 				boolean clickable = menu.isClickable(index);
 				slotSection.set("Clickable", clickable);
 				slotSection.set("Material", slotItem.getType().toString());
 				slotSection.set("Amount", slotItem.getAmount());
 				slotSection.set("Data", slotItem.getData().getData());
 				slotSection.set("Durability", slotItem.getDurability());
-				slotSection.set("DisplayName", (slotItem.hasItemMeta())? slotMeta.getDisplayName() : "NULL");
+				slotSection.set("DisplayName", (slotMeta != null)? slotMeta.getDisplayName() : "NULL");
 				
 				Map<Enchantment,Integer> slotEnchantments = slotItem.getEnchantments();
 				List<String> enchantsList = new ArrayList<String>();
@@ -125,7 +125,7 @@ public class MenuManager implements CommandExecutor {
 					slotSection.set("Enchantments."+entry.getKey().getName(), entry.getValue());
 				}
 				List<String> flagsList = new ArrayList<String>();
-				if (slotItem.hasItemMeta()) {
+				if (slotMeta != null) {
 					Set<ItemFlag> slotFlags = slotMeta.getItemFlags();
 					for (ItemFlag flag : slotFlags) {
 						flagsList.add(flag.toString());
@@ -133,11 +133,9 @@ public class MenuManager implements CommandExecutor {
 				}
 				slotSection.set("ItemFlags", flagsList);
 				
-				List<String> loreList = null;
-				if (slotItem.hasItemMeta()) {
+				List<String> loreList = new ArrayList<String>();;
+				if (slotMeta != null && slotMeta.hasLore()) {
 					loreList = slotMeta.getLore();
-				}else {
-					loreList = new ArrayList<String>();
 				}
 				slotSection.set("Lore", loreList);
 			}
