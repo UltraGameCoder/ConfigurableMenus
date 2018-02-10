@@ -50,30 +50,29 @@ public class ConfigurableMenu implements Listener {
 
 	public void fill(int from, int till, ItemStack item) {
 		for (int i = from; i <= till; i++) {
-			inv.setItem(i, item);
-			if (notClickable.contains(i)) notClickable.remove(i);
+			setSlot(i,item);
 		}
-		
 	}
 
 	public void setSlot(int index, ItemStack item) {
 		inv.setItem(index, item);
-		if (notClickable.contains(index)) notClickable.remove(index);
+		if (notClickable.contains(index)) {
+			notClickable.remove(index);
+		}
 	}
 	
 	public void fill(int from, int till, ItemStack item, boolean clickable) {
 		for (int i = from; i <= till; i++) {
-			inv.setItem(i, item);
-			if (notClickable.contains(i)) notClickable.remove(i);
-			if (!clickable) {
-				notClickable.add(i);
-			}
+			setSlot(i,item, clickable);
 		}
 	}
 
 	public void setSlot(int index, ItemStack item, boolean clickable) {
 		inv.setItem(index, item);
-		if (notClickable.contains(index)) notClickable.remove(index);
+		if (notClickable.contains(index)) {
+			notClickable.remove(index);
+		}
+		
 		if (!clickable) {
 			notClickable.add(index);
 		}
