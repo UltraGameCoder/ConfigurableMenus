@@ -62,6 +62,8 @@ public class MenuManager implements CommandExecutor {
 		ConfigurableMenu MenuExample1 = new ConfigurableMenu(ChatColor.translateAlternateColorCodes('&', "&8&lMenuExample&r&61"), 3);
 		ItemStack glassBorder = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 0, (byte) 1);
 		ItemMeta meta = glassBorder.getItemMeta();
+		meta.addEnchant(Enchantment.DURABILITY, 1, true);
+		meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		meta.setDisplayName(" ");
 		glassBorder.setItemMeta(meta);
 		MenuExample1.fill(0,8,glassBorder, false);
@@ -178,8 +180,8 @@ public class MenuManager implements CommandExecutor {
 					meta.setDisplayName(displayName);
 				}
 				
-				List<String> enchantsList = slotSection.getStringList("Enchantments");
-				for (String enchant : enchantsList) {
+				ConfigurationSection enchantsList = slotSection.getConfigurationSection("Enchantments");
+				for (String enchant : enchantsList.getKeys(false)) {
 					meta.addEnchant(Enchantment.getByName(enchant), slotSection.getInt("Enchantments."+enchant), true);
 				}
 				
