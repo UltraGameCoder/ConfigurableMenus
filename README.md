@@ -1,8 +1,10 @@
 ConfigurableMenus
 ========================
 
-Version: 1.1.1
+Version: 1.1.2
 ------------
+
+If you want to expand this plugin with your own features, then please [fork](https://github.com/login?return_to=%2FPublicGameCoder%2FConfigurableMenus) this project to your own account.
 
 Run_Instructions:
 -----------------
