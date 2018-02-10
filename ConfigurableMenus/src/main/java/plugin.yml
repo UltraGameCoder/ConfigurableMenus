@@ -1,0 +1,11 @@
+main: configurablemenus.ConfigurableMenus
+name: ConfigurableMenus
+version: 1.0.0
+author: PublicGameCoder & <YourName>
+description: Made by PublicGameCoder.
+
+commands:
+   openmenu:
+      description: opens the specified menu!
+   menulist:
+      description: shows all the loaded menu's!
