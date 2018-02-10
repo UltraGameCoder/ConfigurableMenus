@@ -163,10 +163,8 @@ public class MenuManager implements CommandExecutor {
 				Material material = Material.getMaterial(slotSection.getString("Material"));
 				if (material == null) continue;
 				int amount = slotSection.getInt("Amount");
-				List<Byte> byteList = slotSection.getByteList("Data");
-				byte data = (!byteList.isEmpty())? byteList.get(0) : 0;
-				List<Short> shortList = slotSection.getShortList("Durability");
-				short durability = (!shortList.isEmpty())? shortList.get(0) : 0;
+				byte data = (byte) slotSection.getInt("Data");
+				short durability =  (short) slotSection.getInt("Durability");
 				
 				String displayName = slotSection.getString("DisplayName");
 				
@@ -252,6 +250,14 @@ public class MenuManager implements CommandExecutor {
 			for (ConfigurableMenu menu : menus) {
 				player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7 - "+menu.getName()));
 			}
+			return true;
+		}
+		
+		if (label.equalsIgnoreCase("refreshmenus")) {
+			saveMenus();
+			menus = new ArrayList<ConfigurableMenu>();
+			loadMenus();
+			player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Refeshed &6"+ menus.size() +"&7 menu's!"));
 			return true;
 		}
 		

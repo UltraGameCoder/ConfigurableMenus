@@ -9,3 +9,5 @@ commands:
       description: opens the specified menu!
    menulist:
       description: shows all the loaded menu's!
+   refreshmenus:
+      description: shows all the loaded menu's!

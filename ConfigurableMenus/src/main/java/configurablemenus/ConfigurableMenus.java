@@ -12,6 +12,7 @@ public final class ConfigurableMenus extends JavaPlugin {
 		MenuManager.getManager();//Initialize MenuManager.
 		getCommand("openmenu").setExecutor(MenuManager.getManager());//Connect Command with MenuManager
 		getCommand("menulist").setExecutor(MenuManager.getManager());//Connect Command with MenuManager
+		getCommand("refreshmenus").setExecutor(MenuManager.getManager());//Connect Command with MenuManager
 	}
 	
 	public static ConfigurableMenus getInstance() {
