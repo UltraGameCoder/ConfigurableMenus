@@ -172,6 +172,9 @@ public class MenuManager implements CommandExecutor {
 				ItemMeta meta = slotItem.getItemMeta();
 				
 				if (meta != null) {
+					if (displayName != null && !displayName.isEmpty()) {
+						displayName = ChatColor.translateAlternateColorCodes('&', displayName);
+					}
 					meta.setDisplayName(displayName);
 				}
 				
