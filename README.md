@@ -4,7 +4,7 @@ ConfigurableMenus
 Version: 1.1.2
 ------------
 
-If you want to expand this plugin with your own features, then please [fork](https://help.github.com/articles/fork-a-repo/) this project to your own account.
+If you want to expand this plugin with your own features, then please [fork](https://help.github.com/articles/fork-a-repo/){:target="_blank"} this project to your own account.
 
 Run_Instructions:
 -----------------
