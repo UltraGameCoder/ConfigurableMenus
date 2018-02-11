@@ -11,7 +11,7 @@ Documentation
 
 To generate the documentation, run doxygen (with Doxyfile as input) in the root directory of this project:
 
-	``doxygen Doxyfile``
+	doxygen Doxyfile
 
 Then open `index.html` in the `doc/html` directory.
 
