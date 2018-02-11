@@ -80,7 +80,7 @@ public class MenuManager implements CommandExecutor {
 	}
 
 	@SuppressWarnings("deprecation")
-	private void saveMenus() {
+	void saveMenus() {
 		FileConfiguration config = getConfig();
 		
 		

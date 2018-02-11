@@ -15,6 +15,11 @@ public final class ConfigurableMenus extends JavaPlugin {
 		getCommand("refreshmenus").setExecutor(MenuManager.getManager());//Connect Command with MenuManager
 	}
 	
+	@Override
+	public void onDisable() {
+		MenuManager.getManager().saveMenus();
+	}
+	
 	public static ConfigurableMenus getInstance() {
 		return instance;
 	}
