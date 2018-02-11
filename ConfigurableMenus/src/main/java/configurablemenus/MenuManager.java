@@ -80,7 +80,7 @@ public class MenuManager implements CommandExecutor {
 	}
 
 	@SuppressWarnings("deprecation")
-	void saveMenus() {
+	public void saveMenus() {
 		FileConfiguration config = getConfig();
 		
 		
@@ -256,6 +256,17 @@ public class MenuManager implements CommandExecutor {
 	 */
 	public void deleteMenu(ConfigurableMenu menu) {
 		if (menus.contains(menu)) {
+			menus.remove(menu);
+		}
+	}
+	
+	/**
+	 * Deletes an menu.
+	 * @param title the menu with the corresponding title.
+	 */
+	public void deleteMenu(String title) {
+		ConfigurableMenu menu = getMenu(title);
+		if (menu != null) {
 			menus.remove(menu);
 		}
 	}
