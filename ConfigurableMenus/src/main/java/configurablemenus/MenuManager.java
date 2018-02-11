@@ -250,6 +250,16 @@ public class MenuManager implements CommandExecutor {
 		return true;
 	}
 	
+	/**
+	 * Deletes an menu.
+	 * @param menu the menu to delete.
+	 */
+	public void deleteMenu(ConfigurableMenu menu) {
+		if (menus.contains(menu)) {
+			menus.remove(menu);
+		}
+	}
+	
 	private void saveConfig(FileConfiguration config) {
 		try {
 			config.save(menuConfigFile);
