@@ -26,7 +26,7 @@ public class MenuManager implements CommandExecutor {
 	
 	private static MenuManager instance;
 	private File menuConfigFile;
-	private List<ConfigurableMenu> menus;
+	private static List<ConfigurableMenu> menus;
 
 	public static MenuManager getManager() {
 		if (instance == null) {
@@ -209,6 +209,23 @@ public class MenuManager implements CommandExecutor {
 
 	private FileConfiguration getConfig() {
 		return YamlConfiguration.loadConfiguration(menuConfigFile);
+	}
+	
+	/**
+	 * Gets the menu with the same title as specified.
+	 * @param title the specified menu title.
+	 * @return the corresponding menu or null if not found.
+	 */
+	public static ConfigurableMenu getMenu(String title) {
+		title = ChatColor.stripColor(title);
+		ConfigurableMenu menu = null;
+		for (ConfigurableMenu m : menus) {
+			if (m.getName().equalsIgnoreCase(title)) {
+				menu = m;
+				break;
+			}
+		}
+		return menu;
 	}
 	
 	private void saveConfig(FileConfiguration config) {
