@@ -237,6 +237,19 @@ public class MenuManager implements CommandExecutor {
 		return (getMenu(title) != null);
 	}
 	
+	/**
+	 * Adds an new menu.
+	 * @param menu the new menu to add.
+	 * @return true if added or false if title already exists.
+	 */
+	public boolean addMenu(ConfigurableMenu menu) {
+		if (containsMenu(menu.getTitle())) {
+			return false;
+		}
+		menus.add(menu);
+		return true;
+	}
+	
 	private void saveConfig(FileConfiguration config) {
 		try {
 			config.save(menuConfigFile);
