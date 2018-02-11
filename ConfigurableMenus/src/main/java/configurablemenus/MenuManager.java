@@ -228,6 +228,15 @@ public class MenuManager implements CommandExecutor {
 		return menu;
 	}
 	
+	/**
+	 * Checks if the menu with the same title exists.
+	 * @param title the specified menu title.
+	 * @return true if exists or false if doesn't exists.
+	 */
+	public static boolean containsMenu(String title) {
+		return (getMenu(title) != null);
+	}
+	
 	private void saveConfig(FileConfiguration config) {
 		try {
 			config.save(menuConfigFile);
