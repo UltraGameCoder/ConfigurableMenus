@@ -25,7 +25,7 @@ On Debian-based Linux, install the following libraries:
 
 Install the following:
 
-[Eclipse IDE for Java Developers](http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/oxygen2)
+- [Eclipse IDE for Java Developers](http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/oxygen2)
 
 Project from git repo:
 Open eclipse and choose File > Import > Git > Projects from Git
