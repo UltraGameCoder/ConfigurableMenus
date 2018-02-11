@@ -1,0 +1,105 @@
+\hypertarget{class_a_p_i_1_1_menu_manager}{}\section{A\+P\+I.\+Menu\+Manager Class Reference}
+\label{class_a_p_i_1_1_menu_manager}\index{A\+P\+I.\+Menu\+Manager@{A\+P\+I.\+Menu\+Manager}}
+Inheritance diagram for A\+P\+I.\+Menu\+Manager\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_a_p_i_1_1_menu_manager}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_a_p_i_1_1_menu_manager_a340fe9d00b3837983d5d2979e99d8c7f}\label{class_a_p_i_1_1_menu_manager_a340fe9d00b3837983d5d2979e99d8c7f}} 
+void {\bfseries save\+Menus} ()
+\item 
+boolean \hyperlink{class_a_p_i_1_1_menu_manager_a19ba30dd360343792e18b81b621b1a1b}{add\+Menu} (\hyperlink{class_a_p_i_1_1_configurable_menu}{Configurable\+Menu} menu)
+\item 
+void \hyperlink{class_a_p_i_1_1_menu_manager_a171c35c1ecde734a3f145db60cd02ea4}{delete\+Menu} (\hyperlink{class_a_p_i_1_1_configurable_menu}{Configurable\+Menu} menu)
+\item 
+void \hyperlink{class_a_p_i_1_1_menu_manager_ae91bcce56f83bdfe318b23521ec19c3d}{delete\+Menu} (String title)
+\item 
+\mbox{\Hypertarget{class_a_p_i_1_1_menu_manager_a3158467b1e48c0cf367b0dc7abf5e0f8}\label{class_a_p_i_1_1_menu_manager_a3158467b1e48c0cf367b0dc7abf5e0f8}} 
+boolean {\bfseries on\+Command} (Command\+Sender sender, Command cmd, String label, String\mbox{[}$\,$\mbox{]} args)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_a_p_i_1_1_menu_manager_a0511013bead3b317121406197845d7b0}\label{class_a_p_i_1_1_menu_manager_a0511013bead3b317121406197845d7b0}} 
+static \hyperlink{class_a_p_i_1_1_menu_manager}{Menu\+Manager} {\bfseries get\+Manager} ()
+\item 
+static \hyperlink{class_a_p_i_1_1_configurable_menu}{Configurable\+Menu} \hyperlink{class_a_p_i_1_1_menu_manager_a42fe754044645b83635c8611ce2f1870}{get\+Menu} (String title)
+\item 
+static boolean \hyperlink{class_a_p_i_1_1_menu_manager_a79ec953890a2548a05a13b483adb424e}{contains\+Menu} (String title)
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_a_p_i_1_1_menu_manager_a19ba30dd360343792e18b81b621b1a1b}\label{class_a_p_i_1_1_menu_manager_a19ba30dd360343792e18b81b621b1a1b}} 
+\index{A\+P\+I\+::\+Menu\+Manager@{A\+P\+I\+::\+Menu\+Manager}!add\+Menu@{add\+Menu}}
+\index{add\+Menu@{add\+Menu}!A\+P\+I\+::\+Menu\+Manager@{A\+P\+I\+::\+Menu\+Manager}}
+\subsubsection{\texorpdfstring{add\+Menu()}{addMenu()}}
+{\footnotesize\ttfamily boolean A\+P\+I.\+Menu\+Manager.\+add\+Menu (\begin{DoxyParamCaption}\item[{\hyperlink{class_a_p_i_1_1_configurable_menu}{Configurable\+Menu}}]{menu }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Adds an new menu. 
+\begin{DoxyParams}{Parameters}
+{\em menu} & the new menu to add. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if added or false if title already exists. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_a_p_i_1_1_menu_manager_a79ec953890a2548a05a13b483adb424e}\label{class_a_p_i_1_1_menu_manager_a79ec953890a2548a05a13b483adb424e}} 
+\index{A\+P\+I\+::\+Menu\+Manager@{A\+P\+I\+::\+Menu\+Manager}!contains\+Menu@{contains\+Menu}}
+\index{contains\+Menu@{contains\+Menu}!A\+P\+I\+::\+Menu\+Manager@{A\+P\+I\+::\+Menu\+Manager}}
+\subsubsection{\texorpdfstring{contains\+Menu()}{containsMenu()}}
+{\footnotesize\ttfamily static boolean A\+P\+I.\+Menu\+Manager.\+contains\+Menu (\begin{DoxyParamCaption}\item[{String}]{title }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Checks if the menu with the same title exists. 
+\begin{DoxyParams}{Parameters}
+{\em title} & the specified menu title. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if exists or false if doesn\textquotesingle{}t exists. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_a_p_i_1_1_menu_manager_a171c35c1ecde734a3f145db60cd02ea4}\label{class_a_p_i_1_1_menu_manager_a171c35c1ecde734a3f145db60cd02ea4}} 
+\index{A\+P\+I\+::\+Menu\+Manager@{A\+P\+I\+::\+Menu\+Manager}!delete\+Menu@{delete\+Menu}}
+\index{delete\+Menu@{delete\+Menu}!A\+P\+I\+::\+Menu\+Manager@{A\+P\+I\+::\+Menu\+Manager}}
+\subsubsection{\texorpdfstring{delete\+Menu()}{deleteMenu()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void A\+P\+I.\+Menu\+Manager.\+delete\+Menu (\begin{DoxyParamCaption}\item[{\hyperlink{class_a_p_i_1_1_configurable_menu}{Configurable\+Menu}}]{menu }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Deletes an menu. 
+\begin{DoxyParams}{Parameters}
+{\em menu} & the menu to delete. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_a_p_i_1_1_menu_manager_ae91bcce56f83bdfe318b23521ec19c3d}\label{class_a_p_i_1_1_menu_manager_ae91bcce56f83bdfe318b23521ec19c3d}} 
+\index{A\+P\+I\+::\+Menu\+Manager@{A\+P\+I\+::\+Menu\+Manager}!delete\+Menu@{delete\+Menu}}
+\index{delete\+Menu@{delete\+Menu}!A\+P\+I\+::\+Menu\+Manager@{A\+P\+I\+::\+Menu\+Manager}}
+\subsubsection{\texorpdfstring{delete\+Menu()}{deleteMenu()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void A\+P\+I.\+Menu\+Manager.\+delete\+Menu (\begin{DoxyParamCaption}\item[{String}]{title }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Deletes an menu. 
+\begin{DoxyParams}{Parameters}
+{\em title} & the menu with the corresponding title. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_a_p_i_1_1_menu_manager_a42fe754044645b83635c8611ce2f1870}\label{class_a_p_i_1_1_menu_manager_a42fe754044645b83635c8611ce2f1870}} 
+\index{A\+P\+I\+::\+Menu\+Manager@{A\+P\+I\+::\+Menu\+Manager}!get\+Menu@{get\+Menu}}
+\index{get\+Menu@{get\+Menu}!A\+P\+I\+::\+Menu\+Manager@{A\+P\+I\+::\+Menu\+Manager}}
+\subsubsection{\texorpdfstring{get\+Menu()}{getMenu()}}
+{\footnotesize\ttfamily static \hyperlink{class_a_p_i_1_1_configurable_menu}{Configurable\+Menu} A\+P\+I.\+Menu\+Manager.\+get\+Menu (\begin{DoxyParamCaption}\item[{String}]{title }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+Gets the menu with the same title as specified. 
+\begin{DoxyParams}{Parameters}
+{\em title} & the specified menu title. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the corresponding menu or null if not found. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Configurable\+Menus/src/main/java/\+A\+P\+I/Menu\+Manager.\+java\end{DoxyCompactItemize}
