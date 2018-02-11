@@ -1,4 +1,4 @@
-package configurablemenus;
+package API;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +21,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import configurablemenus.ConfigurableMenus;
 
 public class MenuManager implements CommandExecutor {
 	

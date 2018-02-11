@@ -2,6 +2,8 @@ package configurablemenus;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import API.MenuManager;
+
 public final class ConfigurableMenus extends JavaPlugin {
 
 	private static ConfigurableMenus instance;
