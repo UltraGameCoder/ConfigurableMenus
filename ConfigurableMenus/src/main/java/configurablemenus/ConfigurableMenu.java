@@ -48,6 +48,10 @@ public class ConfigurableMenu implements Listener {
 	public ItemStack getSlot(int index) {
 		return inv.getItem(index);
 	}
+	
+	public void deleteSlot(int index) {
+		setSlot(index, new ItemStack(Material.AIR));
+	}
 
 	public void fill(int from, int till, ItemStack item) {
 		for (int i = from; i <= till; i++) {
