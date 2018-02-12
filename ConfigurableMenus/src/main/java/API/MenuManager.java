@@ -30,6 +30,10 @@ public class MenuManager implements CommandExecutor {
 	private File menuConfigFile;
 	private static List<ConfigurableMenu> menus;
 
+	/**
+	 * Gets the instance of the class.
+	 * @return the instance of the class.
+	 */
 	public static MenuManager getManager() {
 		if (instance == null) {
 			instance = new MenuManager();
@@ -81,6 +85,9 @@ public class MenuManager implements CommandExecutor {
 		menus = new ArrayList<ConfigurableMenu>();//Clear the menu's
 	}
 	
+	/**
+	 * Saves all the existing menu's.
+	 */
 	public void saveMenus() {
 		FileConfiguration config = getConfig();
 		
@@ -105,11 +112,180 @@ public class MenuManager implements CommandExecutor {
 	/**
 	 * Reload an entire menu with the corresponding title.
 	 * @param title the title of the menu to reload.
+	 * @return true if reloaded successful, or false when reload failed. 
 	 */
-	public void reloadMenu(String title) {
-		saveMenu(title);
-		deleteMenu(title);
-		loadMenu(title);
+	public boolean reloadMenu(String title) {
+		if (!saveMenu(title))return false;
+		if (!deleteMenu(title))return false;
+		if (!loadMenu(title))return false;
+		return true;
+	}
+	
+	/**
+	 * Reload an entire slot of the menu with the corresponding title.
+	 * @param title the title of the menu to reload.
+	 * @return true if reloaded successful, or false when reload failed. 
+	 */
+	public boolean reloadSlot(String title, int slot) {
+		if (!saveSlot(title, slot))return false;
+		if (!deleteSlot(title, slot))return false;
+		if (!loadSlot(title, slot))return false;
+		return true;
+	}
+
+	/**
+	 * Deletes a specific slot of the specified menu corresponding to the title.
+	 * @param title the title of the menu to delete the slot from.
+	 * @param slot the slot to delete.
+	 * @return true if menu exists, or false if doesn't exists.
+	 */
+	private boolean loadSlot(String title, int slot) {
+		title = ChatColor.translateAlternateColorCodes('&', title);
+		if (!containsMenu(title))return false;
+		
+		ConfigurableMenu menu = getMenu(title);
+		
+		loadSlot(menu, slot);
+		return true;
+	}
+
+	/**
+	 * Deletes a specific slot of the specified menu corresponding to the title.
+	 * @param title the title of the menu to delete the slot from.
+	 * @param slot the slot to delete.
+	 * @return true if menu exists, or false if doesn't exists.
+	 */
+	private boolean deleteSlot(String title, int slot) {
+		title = ChatColor.translateAlternateColorCodes('&', title);
+		if (!containsMenu(title))return false;
+		
+		ConfigurableMenu menu = getMenu(title);
+		
+		menu.deleteSlot(slot);
+		return true;
+	}
+
+	/**
+	 * Saves a specific slot of the specified menu corresponding to the title.
+	 * @param title the title of the menu to save the slot from.
+	 * @param slot the slot to save.
+	 * @return true if menu exists, false if doesn't exists.
+	 */
+	public boolean saveSlot(String title, int slot) {
+		title = ChatColor.translateAlternateColorCodes('&', title);
+		if (!containsMenu(title))return false;
+		
+		ConfigurableMenu menu = getMenu(title);
+		
+		saveSlot(menu, slot);
+		return true;
+	}
+	
+	/**
+	 * Loads a specific slot of the specified menu.
+	 * @param menu the menu that contains the slot to be loaded.
+	 * @param slot the slot to be loaded.
+	 */
+	public void loadSlot(ConfigurableMenu menu, int slot) {
+		FileConfiguration config = getConfig();
+		
+		ConfigurationSection slotSection = config.getConfigurationSection("Menus."+menu.getName()+".slots."+slot);
+		
+		boolean clickable = slotSection.getBoolean("Clickable");
+		Material material = Material.getMaterial(slotSection.getString("Material"));
+		if (material == null)return;
+		int amount = slotSection.getInt("Amount");
+		byte data = (byte) slotSection.getInt("Data");
+		short durability =  (short) slotSection.getInt("Durability");
+		
+		String displayName = slotSection.getString("DisplayName");
+		
+		@SuppressWarnings("deprecation")
+		ItemStack slotItem = new ItemStack(material, amount, durability, data);
+		ItemMeta meta = slotItem.getItemMeta();
+		
+		if (meta != null) {
+			if (displayName != null && !displayName.isEmpty()) {
+				displayName = ChatColor.translateAlternateColorCodes('&', displayName);
+			}
+			meta.setDisplayName(displayName);
+		}
+		
+		ConfigurationSection enchantsList = slotSection.getConfigurationSection("Enchantments");
+		for (String enchant : enchantsList.getKeys(false)) {
+			meta.addEnchant(Enchantment.getByName(enchant), slotSection.getInt("Enchantments."+enchant), true);
+		}
+		
+		if (meta != null) {
+			List<String> flagsList = slotSection.getStringList("ItemFlags");
+			for (String flag : flagsList) {
+				meta.addItemFlags(ItemFlag.valueOf(flag));
+			}
+		}
+		
+		if (meta != null) {
+			List<String> loreList = slotSection.getStringList("Lore");
+			meta.setLore(loreList);
+		}
+		
+		if (meta != null) {
+			slotItem.setItemMeta(meta);
+		}
+		
+		menu.setSlot(slot, slotItem, clickable);
+	}
+
+	/**
+	 * Saves a specific slot of the specified menu.
+	 * @param menu the menu that contains the slot to be saved.
+	 * @param slot the slot to be saved.
+	 */
+	public void saveSlot(ConfigurableMenu menu, int slot) {
+		FileConfiguration config = getConfig();
+		
+		ConfigurationSection slotSection = config.createSection("Menus."+menu.getName()+".slots."+slot);
+		
+		saveConfig(config);
+		
+		ItemStack slotItem = menu.getSlot(slot);
+		if (slotItem == null)return;
+		ItemMeta slotMeta = slotItem.getItemMeta();
+		
+		boolean clickable = menu.isClickable(slot);
+		slotSection.set("Clickable", clickable);
+		slotSection.set("Material", slotItem.getType().toString());
+		slotSection.set("Amount", slotItem.getAmount());
+		@SuppressWarnings("deprecation")
+		byte data = slotItem.getData().getData();
+		slotSection.set("Data", data);
+		slotSection.set("Durability", slotItem.getDurability());
+		slotSection.set("DisplayName", (slotMeta != null)? slotMeta.getDisplayName() : "NULL");
+		
+		Map<Enchantment,Integer> slotEnchantments = slotItem.getEnchantments();
+		List<String> enchantsList = new ArrayList<String>();
+		for (Entry<Enchantment, Integer> entry : slotEnchantments.entrySet()) {
+			enchantsList.add(entry.getKey().toString());
+		}
+		slotSection.set("Enchantments", enchantsList);
+		for (Entry<Enchantment, Integer> entry : slotEnchantments.entrySet()) {
+			slotSection.set("Enchantments."+entry.getKey().getName(), entry.getValue());
+		}
+		List<String> flagsList = new ArrayList<String>();
+		if (slotMeta != null) {
+			Set<ItemFlag> slotFlags = slotMeta.getItemFlags();
+			for (ItemFlag flag : slotFlags) {
+				flagsList.add(flag.toString());
+			}
+		}
+		slotSection.set("ItemFlags", flagsList);
+		
+		List<String> loreList = new ArrayList<String>();;
+		if (slotMeta != null && slotMeta.hasLore()) {
+			loreList = slotMeta.getLore();
+		}
+		slotSection.set("Lore", loreList);
+			
+		saveConfig(config);
 	}
 
 	/**
@@ -143,44 +319,7 @@ public class MenuManager implements CommandExecutor {
 		}
 		menuSection.set("slots", slotsList);
 		for (int index = 0; index < slotsList.size(); index++) {
-			ConfigurationSection slotSection = menuSection.createSection("slots."+index);
-			ItemStack slotItem = menu.getSlot(index);
-			if (slotItem == null)continue;
-			ItemMeta slotMeta = slotItem.getItemMeta();
-			
-			boolean clickable = menu.isClickable(index);
-			slotSection.set("Clickable", clickable);
-			slotSection.set("Material", slotItem.getType().toString());
-			slotSection.set("Amount", slotItem.getAmount());
-			@SuppressWarnings("deprecation")
-			byte data = slotItem.getData().getData();
-			slotSection.set("Data", data);
-			slotSection.set("Durability", slotItem.getDurability());
-			slotSection.set("DisplayName", (slotMeta != null)? slotMeta.getDisplayName() : "NULL");
-			
-			Map<Enchantment,Integer> slotEnchantments = slotItem.getEnchantments();
-			List<String> enchantsList = new ArrayList<String>();
-			for (Entry<Enchantment, Integer> entry : slotEnchantments.entrySet()) {
-				enchantsList.add(entry.getKey().toString());
-			}
-			slotSection.set("Enchantments", enchantsList);
-			for (Entry<Enchantment, Integer> entry : slotEnchantments.entrySet()) {
-				slotSection.set("Enchantments."+entry.getKey().getName(), entry.getValue());
-			}
-			List<String> flagsList = new ArrayList<String>();
-			if (slotMeta != null) {
-				Set<ItemFlag> slotFlags = slotMeta.getItemFlags();
-				for (ItemFlag flag : slotFlags) {
-					flagsList.add(flag.toString());
-				}
-			}
-			slotSection.set("ItemFlags", flagsList);
-			
-			List<String> loreList = new ArrayList<String>();;
-			if (slotMeta != null && slotMeta.hasLore()) {
-				loreList = slotMeta.getLore();
-			}
-			slotSection.set("Lore", loreList);
+			saveSlot(menu, index);
 		}
 		saveConfig(config);
 	}
@@ -188,62 +327,22 @@ public class MenuManager implements CommandExecutor {
 	/**
 	 * Loads the menu with the corresponding title.
 	 * @param menu the menu title to load.
+	 * @return true if successful, or false when failed.
 	 */
-	public void loadMenu(String menu) {
+	public boolean loadMenu(String menu) {
 		menu = ChatColor.translateAlternateColorCodes('&', menu);
 		FileConfiguration config = getConfig();
 		
 		ConfigurationSection menuSection = config.getConfigurationSection("Menus."+menu);
+		if (menuSection == null)return false;
 		String title = menuSection.getString("title");
 		int rows = menuSection.getInt("rows");
 		ConfigurableMenu m = new ConfigurableMenu(title, rows);
 		for (int index = 0; index < rows * 9; index++) {
-			ConfigurationSection slotSection = menuSection.getConfigurationSection("slots."+index);
-			
-			boolean clickable = slotSection.getBoolean("Clickable");
-			Material material = Material.getMaterial(slotSection.getString("Material"));
-			if (material == null) continue;
-			int amount = slotSection.getInt("Amount");
-			byte data = (byte) slotSection.getInt("Data");
-			short durability =  (short) slotSection.getInt("Durability");
-			
-			String displayName = slotSection.getString("DisplayName");
-			
-			@SuppressWarnings("deprecation")
-			ItemStack slotItem = new ItemStack(material, amount, durability, data);
-			ItemMeta meta = slotItem.getItemMeta();
-			
-			if (meta != null) {
-				if (displayName != null && !displayName.isEmpty()) {
-					displayName = ChatColor.translateAlternateColorCodes('&', displayName);
-				}
-				meta.setDisplayName(displayName);
-			}
-			
-			ConfigurationSection enchantsList = slotSection.getConfigurationSection("Enchantments");
-			for (String enchant : enchantsList.getKeys(false)) {
-				meta.addEnchant(Enchantment.getByName(enchant), slotSection.getInt("Enchantments."+enchant), true);
-			}
-			
-			if (meta != null) {
-				List<String> flagsList = slotSection.getStringList("ItemFlags");
-				for (String flag : flagsList) {
-					meta.addItemFlags(ItemFlag.valueOf(flag));
-				}
-			}
-			
-			if (meta != null) {
-				List<String> loreList = slotSection.getStringList("Lore");
-				meta.setLore(loreList);
-			}
-			
-			if (meta != null) {
-				slotItem.setItemMeta(meta);
-			}
-			
-			m.setSlot(index, slotItem, clickable);
+			loadSlot(m, index);
 		}
 		menus.add(m);
+		return true;
 	}
 	
 	private void loadMenus() {
@@ -312,11 +411,15 @@ public class MenuManager implements CommandExecutor {
 	/**
 	 * Deletes an menu.
 	 * @param title the menu with the corresponding title.
+	 * @return true if deleted successful, or false when failed.
 	 */
-	public void deleteMenu(String title) {
+	public boolean deleteMenu(String title) {
 		ConfigurableMenu menu = getMenu(title);
 		if (menu != null) {
 			menus.remove(menu);
+			return true;
+		}else {
+			return false;
 		}
 	}
 	
